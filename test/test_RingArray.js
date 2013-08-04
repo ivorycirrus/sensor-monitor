@@ -176,4 +176,81 @@ suite('RingArray.js',function(){
 			assert.equal(0,arr.lastIndex());
 		});
 	});
+
+	suite('toArray', function(){
+		test("convert to array with no loop, full elements", function(){
+			var arr = ringArray.getInstance(5);
+			var testItem = [11,22,33,44,55];
+			for (var inx = 0 ; inx < testItem.length ; inx++){
+				arr.put(testItem[inx]);
+			}
+			assert.equal(0,arr._arrayPointer);
+			assert.equal(1,arr._arrayLoopCounter);
+
+			var extractedArray = arr.toArray();
+			assert.equal(5,extractedArray.length);
+			assert.equal(11,extractedArray[0]);
+			assert.equal(22,extractedArray[1]);
+			assert.equal(33,extractedArray[2]);
+			assert.equal(44,extractedArray[3]);
+			assert.equal(55,extractedArray[4]);
+		});
+		test("convert to array with no loop, with empty space", function(){
+			var arr = ringArray.getInstance(5);
+			var testItem = [11,22,33];
+			for (var inx = 0 ; inx < testItem.length ; inx++){
+				arr.put(testItem[inx]);
+			}
+			assert.equal(3,arr._arrayPointer);
+			assert.equal(0,arr._arrayLoopCounter);
+
+			var extractedArray = arr.toArray();
+			assert.equal(3,extractedArray.length);
+			assert.equal(11,extractedArray[0]);
+			assert.equal(22,extractedArray[1]);
+			assert.equal(33,extractedArray[2]);
+		});
+		test("convert to array on empty array", function(){
+			var arr = ringArray.getInstance(5);
+			assert.equal(0,arr._arrayPointer);
+			assert.equal(0,arr._arrayLoopCounter);
+
+			var extractedArray = arr.toArray();
+			assert.equal(0,extractedArray.length);
+		});
+		test("convert to array with a loop", function(){
+			var arr = ringArray.getInstance(5);
+			var testItem = [11,22,33,44,55,66,77,88];
+			for (var inx = 0 ; inx < testItem.length ; inx++){
+				arr.put(testItem[inx]);
+			}
+			assert.equal(3,arr._arrayPointer);
+			assert.equal(1,arr._arrayLoopCounter);
+
+			var extractedArray = arr.toArray();
+			assert.equal(5,extractedArray.length);
+			assert.equal(44,extractedArray[0]);
+			assert.equal(55,extractedArray[1]);
+			assert.equal(66,extractedArray[2]);
+			assert.equal(77,extractedArray[3]);
+			assert.equal(88,extractedArray[4]);
+		});
+		test("convert to array with 2 loops, fine loop elements", function(){
+			var arr = ringArray.getInstance(5);
+			var testItem = [11,22,33,44,55,66,77,88,99,00];
+			for (var inx = 0 ; inx < testItem.length ; inx++){
+				arr.put(testItem[inx]);
+			}
+			assert.equal(0,arr._arrayPointer);
+			assert.equal(2,arr._arrayLoopCounter);
+
+			var extractedArray = arr.toArray();
+			assert.equal(5,extractedArray.length);
+			assert.equal(66,extractedArray[0]);
+			assert.equal(77,extractedArray[1]);
+			assert.equal(88,extractedArray[2]);
+			assert.equal(99,extractedArray[3]);
+			assert.equal(00,extractedArray[4]);
+		});
+	});
 }); 
