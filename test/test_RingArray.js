@@ -1,7 +1,7 @@
 var assert = require('assert'),
     ringArray = require('../util/RingArray.js');	
 
-suite('RingArray',function(){
+suite('RingArray.js',function(){
 	suiteSetup(function(){
 		// setup code here
 	});
@@ -102,6 +102,78 @@ suite('RingArray',function(){
 			assert.equal(2,arr._arrayPointer);
 			assert.equal(1,arr._arrayLoopCounter);
 			assert.equal(33,arr.get(2));
+		});
+	});
+
+	suite('startIndex',function(){
+		test("last index with no loop", function(){
+			var arr = ringArray.getInstance(10);
+			var testItem = [11,22,33,44,55,66,77,88];
+			for (var inx = 0 ; inx < testItem.length ; inx++){
+				arr.put(testItem[inx]);
+			}
+			assert.equal(8,arr._arrayPointer);
+			assert.equal(0,arr._arrayLoopCounter);
+			assert.equal(0,arr.startIndex());
+		});
+		test("last index with 2 loop", function(){
+			var arr = ringArray.getInstance(7);
+			var testItem = [11,22,33,44,55,66,77,88,99,00,111,222,33,444,555,666,777];
+			for (var inx = 0 ; inx < testItem.length ; inx++){
+				arr.put(testItem[inx]);
+			}
+			assert.equal(3,arr._arrayPointer);
+			assert.equal(2,arr._arrayLoopCounter);
+			assert.equal(10,arr.startIndex());
+		});
+		test("last index when no array element", function(){
+			var arr = ringArray.getInstance(10);
+			assert.equal(0,arr._arrayPointer);
+			assert.equal(0,arr._arrayLoopCounter);
+			assert.equal(0,arr.startIndex());
+		});
+		test("last index when one array element", function(){
+			var arr = ringArray.getInstance(10);
+			arr.put(0);
+			assert.equal(1,arr._arrayPointer);
+			assert.equal(0,arr._arrayLoopCounter);
+			assert.equal(0,arr.startIndex());
+		});
+	});
+	
+	suite('lastIndex', function(){
+		test("last index with no loop", function(){
+			var arr = ringArray.getInstance(10);
+			var testItem = [11,22,33,44,55,66,77,88];
+			for (var inx = 0 ; inx < testItem.length ; inx++){
+				arr.put(testItem[inx]);
+			}
+			assert.equal(8,arr._arrayPointer);
+			assert.equal(0,arr._arrayLoopCounter);
+			assert.equal(7,arr.lastIndex());
+		});
+		test("last index with 2 loop", function(){
+			var arr = ringArray.getInstance(7);
+			var testItem = [11,22,33,44,55,66,77,88,99,00,111,222,33,444,555,666,777];
+			for (var inx = 0 ; inx < testItem.length ; inx++){
+				arr.put(testItem[inx]);
+			}
+			assert.equal(3,arr._arrayPointer);
+			assert.equal(2,arr._arrayLoopCounter);
+			assert.equal(16,arr.lastIndex());
+		});
+		test("last index when no array element", function(){
+			var arr = ringArray.getInstance(10);
+			assert.equal(0,arr._arrayPointer);
+			assert.equal(0,arr._arrayLoopCounter);
+			assert.equal(0,arr.lastIndex());
+		});
+		test("last index when one array element", function(){
+			var arr = ringArray.getInstance(10);
+			arr.put(0);
+			assert.equal(1,arr._arrayPointer);
+			assert.equal(0,arr._arrayLoopCounter);
+			assert.equal(0,arr.lastIndex());
 		});
 	});
 }); 

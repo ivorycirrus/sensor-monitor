@@ -31,7 +31,18 @@ var RingArray = {
 		var itemPosition = position % this._size;
 		if(itemPosition > this._arrayPointer) itemPosition = this._size - itemPosition;
 		return this._innerArray[itemPosition];
-	}
+	},
+
+	startIndex: function(){
+		var ret = (this._arrayLoopCounter*this._size+this._arrayPointer) - this._size;
+		return ret<0?0:ret;		
+	},
+
+	lastIndex: function(){
+		var ret = this._size*this._arrayLoopCounter+this._arrayPointer - 1;
+		return ret<0?0:ret;
+	},
+
 };
 
 exports.getInstance = RingArray.getInstance;
