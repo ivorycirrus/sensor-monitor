@@ -106,7 +106,7 @@ suite('RingArray.js',function(){
 	});
 
 	suite('startIndex',function(){
-		test("last index with no loop", function(){
+		test("start index with no loop", function(){
 			var arr = ringArray.getInstance(10);
 			var testItem = [11,22,33,44,55,66,77,88];
 			for (var inx = 0 ; inx < testItem.length ; inx++){
@@ -116,7 +116,7 @@ suite('RingArray.js',function(){
 			assert.equal(0,arr._arrayLoopCounter);
 			assert.equal(0,arr.startIndex());
 		});
-		test("last index with 2 loop", function(){
+		test("start index with 2 loop", function(){
 			var arr = ringArray.getInstance(7);
 			var testItem = [11,22,33,44,55,66,77,88,99,00,111,222,33,444,555,666,777];
 			for (var inx = 0 ; inx < testItem.length ; inx++){
@@ -126,13 +126,13 @@ suite('RingArray.js',function(){
 			assert.equal(2,arr._arrayLoopCounter);
 			assert.equal(10,arr.startIndex());
 		});
-		test("last index when no array element", function(){
+		test("start index when no array element", function(){
 			var arr = ringArray.getInstance(10);
 			assert.equal(0,arr._arrayPointer);
 			assert.equal(0,arr._arrayLoopCounter);
 			assert.equal(0,arr.startIndex());
 		});
-		test("last index when one array element", function(){
+		test("start index when one array element", function(){
 			var arr = ringArray.getInstance(10);
 			arr.put(0);
 			assert.equal(1,arr._arrayPointer);
