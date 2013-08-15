@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Sensor Monitor</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/jquery-ui.min.css"></link>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/sensor_monitor.css"></link>
+    <script type="text/javascript" src="/javascripts/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="/javascripts/Chart.min.js"></script>
+    <script type="text/javascript" src="/javascripts/sensor_monitor.js"></script>
+</head>
+<body>
+	<br/>
+	<h1 align="center">Sensor Monitor</h1><br/><br/>
+	<table class="frame" align="center">
+		<tr>
+			<th>Temperature</th>
+			<th>Humidity</th>
+			<th>Optical Depth</th>
+		</tr>
+		<tr>
+			<td valign="top">
+				<div id="status_temperature" class="sensor_off">Sensor Off</div>
+				<canvas id="chart_temperature" width="300" height="300"></canvas>
+			</td>
+			<td valign="top">
+				<div id="status_humidity" class="sensor_off">Sensor Off</div>
+				<canvas id="chart_humidity" width="300" height="300"></canvas>
+			</td>
+			<td valign="top">
+				<div id="status_opticaldepth"  class="sensor_off">Sensor Off</div>
+				<canvas id="chart_opticaldepth" width="300" height="300"></canvas>
+			</td>
+		</tr>
+		<tr>
+			<td id="log" align="center" colspan="3">
+				** Connection Log **<br/><textarea id="log_console" rows="12" cols="120"></textarea>
+			</td>
+		</tr>
+	</table>
+
+	
+</body>
+</html>

@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title>Sensor signal generator</title>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/jquery-ui.min.css"></link>
+    <link rel="stylesheet" type="text/css" href="/stylesheets/signal_generator.css"></link>
+    <script type="text/javascript" src="/javascripts/jquery-1.9.1.js"></script>
+    <script type="text/javascript" src="/javascripts/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script type="text/javascript" src="/javascripts/signal_generator.js"></script>
+</head>
+<body>
+	<br/>
+	<h1 align="center">Signal Generator for Admin</h1>
+	<table class="frame" align="center">
+		<tr>
+			<td colspan="3">** Connection Log **<br/><textarea id="log_console" rows="16" cols="120"></textarea></td>
+		</tr>
+		<tr>
+			<th>Temperature</th>
+			<th>Humidity</th>
+			<th>Optical Depth</th>
+		</tr>
+		<tr id="controller">
+			<td><br/>
+				** Sensor **<br/>
+				<form>
+				  <div class="btn_connect" id="btn_connect_temperature">
+				    <input type="radio" id="btn_connect_temperature_off" name="btn_connect_temperature" onclick="sensorOff('temperature')" checked="checked"  /><label for="btn_connect_temperature_off">Offline</label>
+				    <input type="radio" id="btn_connect_temperature_on" name="btn_connect_temperature" onclick="sensorOn('temperature')"/><label for="btn_connect_temperature_on">Online</label>
+				  </div>
+				</form><br/><br/>
+			</td>
+			<td><br/>
+				** Sensor **<br/>
+				<form>
+				  <div class="btn_connect" id="btn_connect_humidity">
+				    <input type="radio" id="btn_connect_humidity_off" name="btn_connect_humidity" onclick="sensorOff('humidity')" checked="checked"/><label for="btn_connect_humidity_off">Offline</label>
+				    <input type="radio" id="btn_connect_humidity_on" name="btn_connect_humidity" onclick="sensorOn('humidity')"/><label for="btn_connect_humidity_on">Online</label>
+				  </div>
+				</form><br/><br/>
+			</td>
+			<td><br/>
+				** Sensor **<br/>
+				<form>
+				  <div class="btn_connect" id="btn_connect_opticaldepth">
+				    <input type="radio" id="btn_connect_opticaldepth_off" name="btn_connect_opticaldepth" onclick="sensorOff('opticaldepth')" checked="checked" /><label for="btn_connect_opticaldepth_off">Offline</label>
+				    <input type="radio" id="btn_connect_opticaldepth_on" name="btn_connect_opticaldepth" onclick="sensorOn('opticaldepth')" /><label for="btn_connect_opticaldepth_on">Online</label>
+				  </div>
+				</form><br/><br/>
+			</td>
+		</tr>
+		<tr>
+			<td valign="top">
+				<br/>** emulate temperature data ** <br/><br/>
+				<form>
+				<table id="data_temperature" class="data_container" align="center">
+					<tr>
+						<th>Sending</th>
+						<th>Temperature Data</th>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="temperature" value="25"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="temperature" value="26"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="temperature" value="27"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="temperature" value="30"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="temperature" value="24"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="temperature" value="22"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="temperature" value="16"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="temperature" value="20"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="temperature" value="21"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="temperature" value="18"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="temperature" value="17"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="temperature" value="18"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="temperature" value="15"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="temperature" value="19"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="temperature" value="22"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="temperature" value="27"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="temperature" value="32"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="temperature" value="30"/></td>
+					</tr>
+				</table>
+				</form>
+				<button id="add_temperature_data" onclick="addRow('temperature')">Add Temperature Data</button>
+			</td>
+			<td valign="top">
+				<br/>** emulate humidity data ** <br/><br/>
+				<form>
+				<table id="data_humidity" class="data_container" align="center">
+					<tr>
+						<th>Sending</th>
+						<th>Humidity Data</th>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="humidity" value="60"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="humidity" value="61"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="humidity" value="65"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="humidity" value="59"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="humidity" value="60"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="humidity" value="61"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="humidity" value="62"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="humidity" value="68"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="humidity" value="66"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="humidity" value="65"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="humidity" value="62"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="humidity" value="60"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="humidity" value="59"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="humidity" value="58"/></td>
+					</tr>
+				</table>
+				</form>
+				<button id="add_humidity_data" onclick="addRow('humidity')">Add Humidity Data</button>
+			</td>
+			<td valign="top">
+				<br/>** emulate optical-depth data ** <br/><br/>
+				<form>
+				<table id="data_opticaldepth" class="data_container" align="center">
+					<tr>
+						<th>Sending</th>
+						<th>Optical-Depth Data</th>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="opticaldepth" value="1"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="opticaldepth" value="2"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="opticaldepth" value="2.5"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="opticaldepth" value="5"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="opticaldepth" value="12"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="opticaldepth" value="21"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="opticaldepth" value="22"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="opticaldepth" value="23"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="opticaldepth" value="23.5"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="opticaldepth" value="23.7"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="opticaldepth" value="24"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="opticaldepth" value="8"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="opticaldepth" value="7"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="opticaldepth" value="7"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="opticaldepth" value="6.5"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="opticaldepth" value="6.5"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="opticaldepth" value="5.2"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="opticaldepth" value="5"/></td>
+					</tr>
+					<tr>
+						<td></td>
+						<td><input type="text" size="16" class="opticaldepth" value="6"/></td>
+					</tr>
+				</table>
+				</form>
+				<button id="add_opticaldepth_data" onclick="addRow('opticaldepth')">Add Optical-Depth Data</button>
+			</td>
+		</tr>
+	</table>
+</body>
+</html>

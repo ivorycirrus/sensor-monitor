@@ -1,0 +1,12 @@
+body {font-family: '나눔 고딕';font-size: 1em;}
+
+h1 {font-weight: bold; margin-bottom: 20px;}
+
+.frame {border-collapse:collapse; border:3px black solid;width: 90%;text-align: center;}
+.frame th {border:1px black solid;width:33.3%;background-color: #f8f8f8;padding-top: 0.6em;padding-bottom: 0.6em;font-size:1.2em;font-weight: bold;}
+.frame td {border:1px black solid;}
+
+.data_container {border-collapse:collapse; border:1px black solid;width: 96%;text-align: center;}
+.data_container th {border:1px black solid; background-color: #d0d0ff;padding-top: 0.2em;padding-bottom: 0.2em;font-size:0.8em;font-weight: bold;}
+.data_container th:first-child {width:20%;}
+.data_container td {border:1px black solid; font-size: 0.7em;}

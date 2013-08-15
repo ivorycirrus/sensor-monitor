@@ -1,0 +1,12 @@
+body {font-family: '나눔 고딕';font-size: 1em;}
+
+h1 {font-weight: bold; margin-bottom: 20px;}
+
+#log {text-align: center;}
+
+.frame {border-collapse:collapse; border:3px black solid;width: 90%;text-align: center;}
+.frame th {border:1px black solid;width:33.3%;background-color: #f8f8f8;padding-top: 0.6em;padding-bottom: 0.6em;font-size:1.2em;font-weight: bold;}
+.frame td {border:1px black solid;}
+
+.sensor_off {background-color: #ffa0a0;}
+.sensor_on {background-color: #a0ffa0;}
