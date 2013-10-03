@@ -1,7 +1,7 @@
 var socket;
 
 var SensorChart = {
-    "temperature" : {
+    "can1" : {
         "canvas_context": null,
         "chart" : null,
         "data_count": 0,
@@ -15,17 +15,18 @@ var SensorChart = {
                         pointStrokeColor : "#fff",
                         data : [0,0,0,0,0,0,0,0,0,0]
                     }
-                ]
+                ],
+                "lastDataTime": ''
             },
         "options" : {
             "animation":false,
             "scaleOverride" : true,
             "scaleSteps" : 10,//Number - The number of steps in a hard coded scale
-            "scaleStepWidth" : 5,//Number - The value jump in the hard coded scale               
+            "scaleStepWidth" : 25,//Number - The value jump in the hard coded scale               
             "scaleStartValue" : 0//Number - The scale starting value
         }
     },
-    "humidity" : {
+    "can2" : {
         "canvas_context": null,
         "chart" : null,
         "data_count": 0,
@@ -49,6 +50,7 @@ var SensorChart = {
             "scaleStartValue" : 0//Number - The scale starting value
         }
     },
+    /*
     "opticaldepth" : {
         "canvas_context": null,
         "chart" : null,
@@ -72,22 +74,24 @@ var SensorChart = {
             "scaleStepWidth" : 5,//Number - The value jump in the hard coded scale               
             "scaleStartValue" : 0//Number - The scale starting value
         }
-    }
+    }*/
 }
 
  $(function() {
 
-    SensorChart.temperature.canvas_context = $("#chart_temperature").get(0).getContext("2d");
-    SensorChart.temperature.chart = new Chart(SensorChart.temperature.canvas_context);
-    SensorChart.temperature.chart.Line(SensorChart.temperature.data,SensorChart.temperature.options);
+    SensorChart.can1.canvas_context = $("#chart_can1").get(0).getContext("2d");
+    SensorChart.can1.chart = new Chart(SensorChart.can1.canvas_context);
+    SensorChart.can1.chart.Line(SensorChart.can1.data,SensorChart.can1.options);
 
-    SensorChart.humidity.canvas_context = $("#chart_humidity").get(0).getContext("2d");
-    SensorChart.humidity.chart = new Chart(SensorChart.humidity.canvas_context);
-    SensorChart.humidity.chart.Line(SensorChart.humidity.data,SensorChart.humidity.options);
+    SensorChart.can2.canvas_context = $("#chart_can2").get(0).getContext("2d");
+    SensorChart.can2.chart = new Chart(SensorChart.can2.canvas_context);
+    SensorChart.can2.chart.Line(SensorChart.can2.data,SensorChart.can2.options);
 
+    /*
     SensorChart.opticaldepth.canvas_context = $("#chart_opticaldepth").get(0).getContext("2d");
     SensorChart.opticaldepth.chart = new Chart(SensorChart.opticaldepth.canvas_context);
     SensorChart.opticaldepth.chart.Line(SensorChart.opticaldepth.data,SensorChart.opticaldepth.options);
+    */
 
     socket = io.connect();
 
@@ -96,37 +100,45 @@ var SensorChart = {
     });
 
     socket.on('sensor_on',function(data){
-        $("#status_"+data).removeClass('sensor_off');
+        /*$("#status_"+data).removeClass('sensor_off');
         $("#status_"+data).addClass('sensor_on');
-        $("#status_"+data).html('Sensor On');
+        $("#status_"+data).html('Sensor On');*/
         $("#log_console").append('[Sensor On]'+data+'\n');
     });
 
     socket.on('sensor_off',function(data){
+        /*
         $("#status_"+data).removeClass('sensor_on');
         $("#status_"+data).addClass('sensor_off');
-        $("#status_"+data).html('Sensor Off');
+        $("#status_"+data).html('Sensor Off');*/
         $("#log_console").append('[Sensor Off]'+data+'\n');
     });
 
     socket.on('sensor_data',function(recv_data){
-        $("#log_console").append(recv_data+'\n');
-        var data = JSON.parse(recv_data);
-        refreshChart(data.sensor, data.data);
+        $("#log_console").append(JSON.stringify(recv_data)+'\n');
+        refreshChart(recv_data.sensor, recv_data.data, recv_data.time);
     });
  });
 
-function refreshChart(sensor, data){
-    console.log(SensorChart[sensor]);
-    console.log(SensorChart[sensor].data_count);
+function refreshChart(sensor, data, time){
+    var dataTime = time[0]+':'+time[1];
+    if(dataTime == SensorChart[sensor].data.lastDataTime) {
+        dataTime = time[2];
+    }else{
+        SensorChart[sensor].data.lastDataTime = dataTime;
+        dataTime += (':'+time[2]);
+    }
+
     if(SensorChart[sensor].data_count<10){
         SensorChart[sensor].data.datasets[0].data[SensorChart[sensor].data_count] = data;
+        SensorChart[sensor].data.labels[SensorChart[sensor].data_count] = dataTime;
     }else{
         SensorChart[sensor].data.datasets[0].data.push(data);
         SensorChart[sensor].data.datasets[0].data.shift();
-        SensorChart[sensor].data.labels.push(SensorChart[sensor].data_count);
+        SensorChart[sensor].data.labels.push(dataTime);
         SensorChart[sensor].data.labels.shift();
     }
+    
     SensorChart[sensor].data_count++;
     SensorChart[sensor].chart.Line(SensorChart[sensor].data,SensorChart[sensor].options);
 }

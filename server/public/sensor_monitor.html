@@ -14,29 +14,29 @@
 </head>
 <body>
 	<br/>
-	<h1 align="center">Sensor Monitor</h1><br/><br/>
+	<h1 align="center">Sensor Monitor</h1><br/>
 	<table class="frame" align="center">
 		<tr>
-			<th>Temperature</th>
-			<th>Humidity</th>
-			<th>Optical Depth</th>
+			<th>can1</th>
+			<th>can2</th>
+			<!--<th>Optical Depth</th>-->
 		</tr>
 		<tr>
 			<td valign="top">
-				<div id="status_temperature" class="sensor_off">Sensor Off</div>
-				<canvas id="chart_temperature" width="300" height="300"></canvas>
+				<!--<div id="status_can1" class="sensor_off">Sensor Off</div>-->
+				<canvas id="chart_can1" width="600" height="400"></canvas>
 			</td>
 			<td valign="top">
-				<div id="status_humidity" class="sensor_off">Sensor Off</div>
-				<canvas id="chart_humidity" width="300" height="300"></canvas>
+				<!--<div id="status_can2" class="sensor_off">Sensor Off</div>-->
+				<canvas id="chart_can2" width="600" height="400"></canvas>
 			</td>
-			<td valign="top">
+			<!--<td valign="top">
 				<div id="status_opticaldepth"  class="sensor_off">Sensor Off</div>
 				<canvas id="chart_opticaldepth" width="300" height="300"></canvas>
-			</td>
+			</td>-->
 		</tr>
 		<tr>
-			<td id="log" align="center" colspan="3">
+			<td id="log" align="center" colspan="2">
 				** Connection Log **<br/><textarea id="log_console" rows="12" cols="120"></textarea>
 			</td>
 		</tr>
