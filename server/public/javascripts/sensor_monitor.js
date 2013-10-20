@@ -50,6 +50,55 @@ var SensorChart = {
             "scaleStartValue" : 0//Number - The scale starting value
         }
     },
+    "rs485_1" : {
+        "canvas_context": null,
+        "chart" : null,
+        "data_count": 0,
+        "data" : {
+                labels : ["0","1","2","3","4","5","6","7","8","9"],
+                datasets : [
+                    {
+                        fillColor : "rgba(225,165,151,0.5)",
+                        strokeColor : "rgba(225,165,151,1)",
+                        pointColor : "rgba(225,165,151,1)",
+                        pointStrokeColor : "#fff",
+                        data : [0,0,0,0,0,0,0,0,0,0]
+                    }
+                ],
+                "lastDataTime": ''
+            },
+        "options" : {
+            "animation":false,
+            "scaleOverride" : true,
+            "scaleSteps" : 10,//Number - The number of steps in a hard coded scale
+            "scaleStepWidth" : 5,//Number - The value jump in the hard coded scale               
+            "scaleStartValue" : 0//Number - The scale starting value
+        }
+    },
+    "rs485_2" : {
+        "canvas_context": null,
+        "chart" : null,
+        "data_count": 0,
+        "data" : {
+                labels : ["0","1","2","3","4","5","6","7","8","9"],
+                datasets : [
+                    {
+                        fillColor : "rgba(151,187,205,0.5)",
+                        strokeColor : "rgba(151,187,205,1)",
+                        pointColor : "rgba(151,187,205,1)",
+                        pointStrokeColor : "#fff",
+                        data : [0,0,0,0,0,0,0,0,0,0]
+                    }
+                ]
+            },
+        "options" : {
+            "animation":false,
+            "scaleOverride" : true,   
+            "scaleSteps" : 10,//Number - The number of steps in a hard coded scale
+            "scaleStepWidth" : 10,//Number - The value jump in the hard coded scale               
+            "scaleStartValue" : 0//Number - The scale starting value
+        }
+    },
     /*
     "opticaldepth" : {
         "canvas_context": null,
@@ -86,6 +135,14 @@ var SensorChart = {
     SensorChart.can2.canvas_context = $("#chart_can2").get(0).getContext("2d");
     SensorChart.can2.chart = new Chart(SensorChart.can2.canvas_context);
     SensorChart.can2.chart.Line(SensorChart.can2.data,SensorChart.can2.options);
+
+    SensorChart.rs485_1.canvas_context = $("#chart_rs485_1").get(0).getContext("2d");
+    SensorChart.rs485_1.chart = new Chart(SensorChart.rs485_1.canvas_context);
+    SensorChart.rs485_1.chart.Line(SensorChart.rs485_1.data,SensorChart.rs485_1.options);
+
+    SensorChart.rs485_2.canvas_context = $("#chart_rs485_2").get(0).getContext("2d");
+    SensorChart.rs485_2.chart = new Chart(SensorChart.rs485_2.canvas_context);
+    SensorChart.rs485_2.chart.Line(SensorChart.rs485_2.data,SensorChart.rs485_2.options);
 
     /*
     SensorChart.opticaldepth.canvas_context = $("#chart_opticaldepth").get(0).getContext("2d");

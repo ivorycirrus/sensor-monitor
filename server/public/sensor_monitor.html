@@ -14,11 +14,34 @@
 </head>
 <body>
 	<br/>
-	<h1 align="center">Sensor Monitor</h1><br/>
+	<h1 align="center">RS485 Sensor Monitor</h1><br/>
 	<table class="frame" align="center">
 		<tr>
-			<th>can1</th>
-			<th>can2</th>
+			<th>Temperature</th>
+			<th>Humidity</th>
+			<!--<th>Optical Depth</th>-->
+		</tr>
+		<tr>
+			<td valign="top">
+				<!--<div id="status_can1" class="sensor_off">Sensor Off</div>-->
+				<canvas id="chart_rs485_1" width="600" height="400"></canvas>
+			</td>
+			<td valign="top">
+				<!--<div id="status_can2" class="sensor_off">Sensor Off</div>-->
+				<canvas id="chart_rs485_2" width="600" height="400"></canvas>
+			</td>
+			<!--<td valign="top">
+				<div id="status_opticaldepth"  class="sensor_off">Sensor Off</div>
+				<canvas id="chart_opticaldepth" width="300" height="300"></canvas>
+			</td>-->
+		</tr>
+	</table>
+	<br/>
+	<h1 align="center">CAN Sensor Monitor</h1><br/>
+	<table class="frame" align="center">
+		<tr>
+			<th>Diatance</th>
+			<th>Humidity</th>
 			<!--<th>Optical Depth</th>-->
 		</tr>
 		<tr>

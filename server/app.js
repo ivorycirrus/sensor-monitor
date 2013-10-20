@@ -85,6 +85,7 @@ net.createServer(function(tcp){
 		for(var i = 0 ; i < tempArray.length ; i++){
 			var tempData = tempArray[i].split(',');
 			var sensorType = null;
+			var digitDevidor = 1;
 			if(tempData[0]=='ffff'){
 				continue;
 			}else if(tempData[0]=='100') {
@@ -92,10 +93,18 @@ net.createServer(function(tcp){
 			}else if(tempData[0]=='200') {
 				sensorType = 'can2';
 			}
+			else if(tempData[0]=='300') {
+				sensorType = 'rs485_1';
+				digitDevidor = 100;
+			}
+			else if(tempData[0]=='400') {
+				sensorType = 'rs485_2';
+				digitDevidor = 100;
+			}
 
 			var sensorData = { 
 								sensor: sensorType, 
-								data: tempData[1], 
+								data: parseFloat(tempData[1])/digitDevidor, 
 								time: [objDate.getHours(),objDate.getMinutes(),objDate.getSeconds()]
 							};
 			dataSet.push(sensorData);
